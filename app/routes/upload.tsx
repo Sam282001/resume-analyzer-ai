@@ -7,6 +7,11 @@ import { convertPdfToImage } from "~/lib/pdftoimg";
 import { usePuterStore } from "~/lib/puter";
 import { generateUUID } from "~/lib/utils";
 
+export const meta = () => [
+  { title: "Resumind | Upload" },
+  { name: "description", content: "Upload your resume" },
+];
+
 const upload = () => {
   const { auth, isLoading, fs, ai, kv } = usePuterStore();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -75,6 +80,7 @@ const upload = () => {
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
     setStatusText("Analysis Completed, Redirecting.....");
     console.log(data);
+    navigate(`/resume/${uuid}`);
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
